@@ -5,6 +5,7 @@ const path = require('path');
 const sassMiddleware = require('node-sass-middleware');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
+const helmet = require('helmet');
 
 if( process.env.NODE_ENV == 'development' ) app.use(morgan('dev'));
 
@@ -19,9 +20,9 @@ app.use(sassMiddleware({
 
 app.use(cookieParser());
 app.use(express.json());
+app.use(helmet());
 app.use(express.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname,'./public/')));
-
 //view engine
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/app/resources/views/');
