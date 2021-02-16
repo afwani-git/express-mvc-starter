@@ -1,26 +1,25 @@
-const router = require('express').Router();
-const userModel = require('../models/userModel');
-const tesMiddleware = require('../middleware/tes');
+const router = require("express").Router();
+//const userModel = require("../models/userModel");
+const model = require("../models");
+const tesMiddleware = require("../middleware/tes");
 
-router.get('/tesdb',(req,res) => {
-	//tes db 
-	userModel.findAll().then((data) => {
-		res.status(200).json({
-			status:200,
-			length:data.length,
-			data:data
-		});
-	}).catch(err => err)
-})
+router.get("/tesdb", async (req, res) => {
+  //tes db
+  const result = await model.users.findAll();
 
-router.get('/',tesMiddleware,(req,res) => {
-	//tes view engine
-	const msg = req.name;
-	res.status(200).render('index',{
-		name:msg
-	})
+  res.status(200).json({
+    text: "helo world",
+    data: result,
+  });
+});
 
-})
-
+router.get("/", tesMiddleware, (req, res) => {
+  //tes view engine
+  const msg = req.name;
+  res.status(200).render("index", {
+    name: msg,
+  });
+});
 
 module.exports = router;
+
